@@ -32,7 +32,7 @@ const data: Ref<WeatherData | undefined> = ref();
 
 const fetchWeather = async (coords: Coords): Promise<WeatherData> => {
     const { latitude, longitude } = coords;
-    const q = `${ latitude }, ${ longitude }`;
+    const q = `${latitude}, ${longitude}`;
     const res = await fetch(
         `https://api.weatherapi.com/v1/current.json?key=${import.meta.env.VITE_APP_WEATHER_API_KEY}&q=${q}`
     );
@@ -41,11 +41,11 @@ const fetchWeather = async (coords: Coords): Promise<WeatherData> => {
 };
 
 const formatDate = (dateString: Date): string => {
-const date = new Date(dateString);
-return new Intl.DateTimeFormat("default", {
-dateStyle: "long",
-timeStyle: "short",
-}).format(date);
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("default", {
+        dateStyle: "long",
+        timeStyle: "short",
+    }).format(date);
 };
 
 onMounted(async () => {
@@ -69,7 +69,7 @@ onMounted(async () => {
                 </h1>
                 <p>{{ data.location.name }} {{ data.location.region }}</p>
                 <p>Precipitation: {{ data.current.precip_mm }}mm</p>
-                <p>{{ formatDate(data.location.localtime) }}</p>
+                <p data-testid="localtime">{{ formatDate(data.location.localtime) }}</p>
                 <p>
                     Wind: {{ data.current.wind_kph }} kph
                     <wind-direction :degrees="data.current.wind_degree" />
